@@ -1,0 +1,407 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Cazpire - Digital Guidance Counselor</title>
+    <meta content="Digital Guidance Counselor the path to your career" name="description">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+<style>
+.hide {display:none;}
+</style>
+    <link href="css/style.css" media="all" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900%7CMontserrat:400,700%7COswald:300,400,700" rel="stylesheet" type="text/css">
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+	<!-- <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"> -->
+
+
+    <!-- <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"> -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css" integrity="sha512-4e743y/yh7ffjixFn2DBKvAA0j02JNn0iQ/bIq6usesbp6TRPcZFW0XHnwfSnpTtsTmMGh0UmvbXY26aJfIb0Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<script src="https://unpkg.com/axios@0.21.1/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <script>
+        function serialize(obj){
+            var str = [];
+            for (var p in obj){
+                if (obj.hasOwnProperty(p)) {
+                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                }
+            }
+            return str.join("&");
+        }
+        $(function() {
+
+            var longitude = 0,
+                latitude = 0;
+
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition);
+                } else{
+                    //x.innerHTML="Geolocation is not supported by this browser.";}
+                }
+            }
+
+            function showPosition(position)
+            {
+                console.log('position', position)
+                latitude = position.coords.latitude;
+                longitude = position.coords.longitude;
+                //x.innerHTML="Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
+            }
+            getLocation();
+
+
+            $("#message").hide();
+
+            $('#newsletter').on("submit", function(e) {
+                e.preventDefault();
+                var long = longitude,
+                lat = latitude;
+                if (document.getElementById('consent').checked){
+                    axios({
+                            method: "post",
+                            url: "subscribe",
+                            data: serialize({name: this.name.value, email: this.email.value, long, lat, identify: this.identify.value, consent: this.consent.value}),
+                        }).then(function(response){
+                            $("#message").text(response.data);
+                            $("#message").show();
+                            $("#newsletter").hide();
+                        });
+                } else {
+                    $("#consent-error").text('Please select to consent to submit subscribe');
+                }
+            });
+        });
+    </script>
+    <body>
+
+
+
+<div>
+    <div>
+
+        <nav class="navbar navbar-expand-md fixed-top navbar-bg-switch navbar-dark">
+            <div class="container">
+                <div class="navbar-header fadeIn-element" style="">
+                    <div class="logo">
+                        <a class="navbar-brand logo" href="#">
+                            <img alt="Logo" class="logo-light" src="images/img/logo-light.png" style="width:35px;">
+                            <img alt="Logo" class="logo-dark" src="images/img/logo-dark.png" style="width:35px;">
+                        </a>
+                    </div>
+                </div>
+                <div class="main-navigation fadeIn-element" style="">
+                    <div class="navbar-header">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span><span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <ul class="navbar-nav mr-auto navbar-right">
+                            <li class="nav-item">
+                                <a class="nav-link page-scroll link-underline-menu active" href="#home">Home</a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link page-scroll link-underline-menu" href="#why">Why PathtoCareer?</a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link page-scroll link-underline-menu" href="#subscribe">Subscribe</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link page-scroll link-underline-menu" href="#subscribe">Beta Signup</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link page-scroll link-underline-menu" href="#about">Learn More</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        
+        
+        
+
+        <div class="upper-page" id="home">
+            <div class="hero-fullscreen"> <!-- overlay overlay-top-bottom-dark-15 -->
+                <div class="hero-fullscreen-fix overlay overlay-dark-60">
+                	<div class="slick-auto">
+                		<div class="hero-bg bg-img-single"></div>
+						<div class="hero-bg bg-img-single2"></div>
+						<div class="hero-bg bg-img-single3"></div>
+						<div class="hero-bg bg-img-single4"></div>
+                        <div class="hero-bg bg-img-single5"></div>
+                        <div class="hero-bg bg-img-single6"></div>
+                        <div class="hero-bg bg-img-single7"></div>
+					</div>
+                </div>
+            </div>
+            <div class="center-container">
+                <div class="center-block-header fadeIn-element text-center">
+                
+                    <h1 class="home-page-title" style="opacity: 1;display:none;">
+                        Cazpire
+                    </h1>
+                    <h2 class="home-page-title" style="opacity: 1;color:#C3C3C3;">Digital Guidance Counselor</h2>
+                </div>
+            </div>
+        </div>
+
+        <section id="about">
+            <section id="mission" class=" overlay overlay-dark-60">
+                <div class="container d-flex">
+                    <div class="row justify-content-center align-self-center">
+                        <div class="col-xs-12">
+                            <div class="inner-divider-half"></div>
+                            <div class="row">
+                                <div class="col-lg-12 text-left">
+                                    <div class="inner-divider-ultra-half"></div>
+                                    <h2 style="color:#FFFFFF;position:relative;z-index:1;">Our Mission</h2>
+                                    <p style="color:#FFFFFF;position:relative;z-index:1;">We believe in nurturing, guiding and empowering all students to achieve their career dream. Our digital platform guides youth from high-school to Career with curated, customized & comprehensive data to help them match with varied career paths.</p>
+                                    <div class="inner-divider-ultra-half"></div>
+                                </div>
+                            </div>
+                            <div class="inner-divider-half"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="container sections">
+                <div class="inner-divider-half"></div>
+                <div class="row" style="display: none;">
+                    <div class="col-md-6 col-sm-12">
+                    	<div class="inner-divider-half d-none d-md-block"></div>
+                        <h2>Our Mission</h2>
+                        <p>We believe in nurturing, guiding and empowering all students to achieve their career dream. Our digital platform guides youth from high-school to Career with curated, customized & comprehensive data to help them match with varied career paths.</p>
+                        <div class="inner-divider-half d-none d-md-block"></div>
+                    </div>
+                    <div class="col-md-6 mission-background d-none d-md-block">
+                    </div>
+                </div>
+                <div class="row">
+                	<div class="col-md-6 student-background d-none d-md-block">
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                    	<div class="inner-divider-half d-none d-md-block"></div>
+                        <h2>Students</h2>
+                        <p>With our proprietory MILE Assessment, Students can perform customized assessments of over 40,000+ Career paths, that suit their personality. In addition, the choosen Career is kept aligned to market trends that helps plan and track progress.</p>
+                        <div class="inner-divider-half d-none d-md-block"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                    	<div class="inner-divider-half d-none d-md-block"></div>
+                        <h2>Parents</h2>
+                        <p>Planning kid’s futures and supporting their growth is one of many responsibilities a Parents owns and we want to make it simple and easy. PathtoCareer, enables parents with knowledge and guided information to support kid’s progress and helps to identify Career paths that are both relatable and comfortable based on their personality.</p>
+                        <div class="inner-divider-half d-none d-md-block"></div>
+                    </div>
+                    <div class="col-md-6 parents-background d-none d-md-block">
+                    </div>
+                </div>
+                <div class="row">
+                	<div class="col-md-6 financials-background d-none d-md-block">
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                    	<div class="inner-divider-half d-none d-md-block"></div>
+                        <h2>Financials</h2>
+                        <p>Financial planning plays an important role in kid’s education, as investing in oneself is the best investment. But not everyone is equipped with support that helps financial planning, worry not, no matter where you are in the plan or don’t have a plan, no problem, our platform is equipped with all support and service that help in an efficient financial planning for a brighter future</p>
+                        <div class="inner-divider-half d-none d-md-block"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                    	<div class="inner-divider-half d-none d-md-block"></div>
+                        <h2>Advisors</h2>
+                        <p>Do you care about next generation?<br />
+                        Do you want to give back to the community? <br />
+                        Do you want to share knowledge that you have acquired the hard way?<br />
+                        Do you care to nuture the future generation?<br /><br />
+                        ... then our platform is for you. Come join the revolution.</p>
+                        <div class="inner-divider-half d-none d-md-block"></div>
+                    </div>
+                    <div class="col-md-6 advisors-background d-none d-md-block">
+                    </div>
+                </div>
+                <div class="inner-divider-half"></div>
+            </div>
+        </section>
+        <section id="why" style="background-color: #273044;color:#FFFFFF;">
+            <div class="container d-flex" style="min-height: 100vh;">
+                <div class="row justify-content-center align-self-center">
+                    <div class="col-xs-12">
+                        <div class="inner-divider-half"></div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 text-center">
+                                <div class="inner-divider-ultra-half"></div>
+                                <div style="font-size:60px;"><i class="far fa-compass"></i></div>
+                                <h2>MILE Assessment</h2>
+                                <p style="color:#FFFFFF!important;">Tailored assessment based on your interests</p>
+                                <div class="inner-divider-ultra-half"></div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 text-center">
+                                <div class="inner-divider-ultra-half"></div>
+                                <div style="font-size:60px;"><i class="fas fa-road"></i></div>
+                                <h2>Guided Journey</h2>
+                                <p style="color:#FFFFFF!important;">Mapping Education requirements in building a Career</p>
+                                <div class="inner-divider-ultra-half"></div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 text-center">
+                                <div class="inner-divider-ultra-half"></div>
+                                <div style="font-size:60px;"><i class="fas fa-compress-alt"></i></div>
+                                <h2>Compare Careers</h2>
+                                <p style="color:#FFFFFF!important;">Compare various options & make an educated selection of Career</p>
+                                <div class="inner-divider-ultra-half"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 text-center">
+                                <div class="inner-divider-ultra-half"></div>
+                                <div style="font-size:60px;"><i class="fas fa-map-signs"></i></div>
+                                <h2>Comprehensive Choice</h2>
+                                <p style="color:#FFFFFF!important;">Access over 40,000+ Career options to research</p>
+                                <div class="inner-divider-ultra-half"></div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 text-center">
+                                <div class="inner-divider-ultra-half"></div>
+                                <div style="font-size:60px;"><i class="fas fa-file-invoice-dollar"></i></div>
+                                <h2>Financial Support</h2>
+                                <p style="color:#FFFFFF!important;">Get access to Financial support needed to forward your Career</p>
+                                <div class="inner-divider-ultra-half"></div>
+                            </div>
+                        </div>
+                        <div class="inner-divider-half"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="subscribe">
+            <div class="container sections">
+                <div class="inner-divider-half"></div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="inner-divider-half d-none d-md-block"></div>
+                            <h2>Subscribe</h2>
+                            <p style="margin-bottom:0px;">Please sign-up for an early bird offer to access PathtoCareer. We will be sure to send you a personalized invite once we are ready.</p>
+                            <newsletter>
+                                <span id="message"></span>
+                                <form id="newsletter" method="POST" action="/subscribe">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Your Name" class="form-control" name="name" id="name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="email" placeholder="Your Email" class="form-control" name="email" id="email" required>
+                                    </div>
+                                    <p style="margin-bottom:0px;">How do you identify yourself?<br />
+                                        <input id="student" type="radio" name="identify" value="Student" required> <label for="student">Student</label>
+                                        <input id="parent" type="radio" name="identify" value="Parent"> <label for="parent">Parent / Guardian</label>
+                                        <input id="advisor" type="radio" name="identify" value="Advisor"> <label for="advisor">Advisor</label>
+                                    </p>
+                                    <p style="margin-bottom:0px;"><input type="checkbox" name="consent" value="t" id="consent"> <label for="consent">Consent to receive email</label><br /><span id="consent-error"></span></p>
+                                    <input type="submit" value="Subscribe" class="btn btn-primary">
+                                </form>
+                            </newsletter>
+                        <div class="inner-divider-half d-none d-md-block"></div>
+                    </div>
+                    <div class="col-md-6 subscribe-background d-none d-md-block">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="inner-divider-half"></div>
+        <section id="footer">
+            <div class="container sections">
+                <div class="inner-divider-half"></div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <h4>Quick Links</h4>
+                        <div>Reach us using <a href="mailto:contact@pathtocareer.com">contact@pathtocareer.com</a></div>
+                        <div><a data-toggle="modal" data-target="#exampleModal" style="cursor: pointer;">Privacy</a></div>
+                    </div>
+                    <div class="col-md-3 col-sm-12">
+                        <h4>Follow Us</h4>
+                        <i class="fab fa-twitter" style="color: rgb(85, 172, 239);width:20px;vertical-align: middle;"></i> Twitter<br />
+                        <i class="fab fa-facebook-f" style="color: rgb(59, 89, 153);width:20px;vertical-align: middle;"></i> Facebook<br />
+                        <i class="fab fa-instagram" style="color: rgb(228, 65, 96);width:20px;vertical-align: middle;"></i> Instagram<br />
+                    </div>
+                    <div class="col-md-3 col-sm-12">
+                        <h4>Supported By</h4>
+                        <a data-toggle="modal" data-target="#example2Modal" style="cursor: pointer;"><img src="images/img/background/altitude2.png" style="width:70px;"></a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <div class="inner-divider-half"></div>
+                        <p style="color:#FFFFFF;">Copyright © 2021 PathtoCareer Inc. All right reserved</p>
+                    </div>
+                </div>
+                <div class="inner-divider-half"></div>
+            </div>
+        </section>
+
+
+        <div class="modal fade" id="example2Modal" tabindex="-1" aria-labelledby="example2ModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="example2ModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 text-center">
+                        <a href="https://altitudeaccelerator.ca" target="_blank"><img src="images/img/background/altitude.png" width="200"></a>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 text-center">
+                        <img src="images/img/background/PamBanks.png" width="200"><br />
+                        <a href="https://www.linkedin.com/in/pam-banks-7b981810/" target="_blank"><img src="images/img/background/linkedin.png" width="60" style="padding-top:20px;"></a>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 text-center">
+                        <img src="images/img/background/PaulBarter.png" width="200"><br />
+                        <a href="https://www.linkedin.com/in/pbarter/" target="_blank"><img src="images/img/background/linkedin.png" width="60" style="padding-top:20px;"></a>
+                    </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Privacy</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Privacy
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script src="js/intro.js"></script>
+
+
+    </div>
+</div>
+<!-- <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script> -->
+	</body>
+</html>
