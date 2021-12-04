@@ -6,6 +6,7 @@ var http = require('http');
 
 const subscribersFilePath = "./data/subscribers.json";
 var subscribers = fs.readJSONSync(subscribersFilePath);
+
 /*
 http.createServer(function (req, res) {
     res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
@@ -58,6 +59,8 @@ app.get('/rycjtr35iy3h7yid', (req, res)=>{
 app.get('/', function(req, res){
     res.sendFile('index.html', { root: __dirname + "/public" } );
 });
+
+
 /*
 app.get('/', function(req, res){
     res.sendFile('index2.html', { root: __dirname + "/public" } );
